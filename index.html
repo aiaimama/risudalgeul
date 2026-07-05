@@ -189,7 +189,16 @@ h1{ font-size: clamp(32px, 4.6vw, 50px); line-height: 1.25; }
 @media (max-width: 640px){
   .spec-grid{ grid-template-columns: 1fr; }
   .compare-row{ grid-template-columns: 1fr 1fr; }
-  .compare-label{ display: none; }
+  .compare-label{
+    display: block;
+    grid-column: 1 / -1;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lav-dp);
+    padding-bottom: 6px;
+    margin-bottom: 2px;
+    border-bottom: 1px dashed var(--line);
+  }
   .compare-cell{ flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px; }
   .compare-head .compare-label{ display: none; }
   .accordion-panel-inner{ padding: 0 18px 18px 18px; }
@@ -245,8 +254,8 @@ a:focus-visible, .btn:focus-visible, .accordion-header:focus-visible{ outline: 2
       </div>
       <div class="compare-row">
         <div class="compare-cell compare-label">모델 선택</div>
-        <div class="compare-cell locked">회사가 정해줘요</div>
-        <div class="compare-cell open compare-highlight">API로 직접 연결해요</div>
+        <div class="compare-cell locked">회사가 제공하는 모델만 골라요</div>
+        <div class="compare-cell open compare-highlight">어떤 모델이든 API만 있으면 연결해요</div>
       </div>
       <div class="compare-row">
         <div class="compare-cell compare-label">프롬프트 구조</div>
