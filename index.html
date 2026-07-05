@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RISU/MANUAL — RisuAI 비공식 가이드</title>
+<meta name="description" content="RisuAI 프론트엔드 사용설명서 — 플랫폼과 프론트엔드의 차이, RisuAI 구조, 캐릭터·로어북·스크립트 가이드">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{
+  --bg: #f7f7f8;
+  --card: #ffffff;
+  --card-pk: #fdf0ea;
+  --card-lv: #f2f2f4;
+  --lav: #a8a8b0;
+  --lav-dp: #6e6e76;
+  --pink: #ff8a65;
+  --pink-dp: #e8603c;
+  --mint: #d6d6da;
+  --text: #333333;
+  --text-dim: #8d8d93;
+  --line: #e5e5e8;
+
+  --font-display: 'Gaegu', cursive;
+  --font-accent: 'Jua', sans-serif;
+  --font-body: 'Pretendard', -apple-system, sans-serif;
+}
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  font-size: 16px;
+  position: relative;
+  overflow-x: hidden;
+}
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *{ animation: none !important; transition: none !important; }
+}
+
+.blob{ position: fixed; border-radius: 50%; filter: blur(70px); z-index: 0; pointer-events: none; opacity: 0.55; }
+.blob-a{ width: 420px; height: 420px; top: -140px; right: -120px; background: var(--pink); }
+.blob-b{ width: 380px; height: 380px; top: 40%; left: -160px; background: var(--lav); opacity: 0.35; }
+.blob-c{ width: 320px; height: 320px; bottom: -140px; right: 8%; background: var(--mint); opacity: 0.3; }
+
+a{ color: inherit; text-decoration: none; }
+
+.eyebrow{
+  display: inline-block;
+  font-family: var(--font-accent);
+  font-size: 12.5px;
+  color: var(--lav-dp);
+  background: var(--card-lv);
+  border-radius: 999px;
+  padding: 6px 14px;
+  margin: 0 0 16px;
+  font-weight: 400;
+}
+
+h1, h2, h3{ font-family: var(--font-display); font-weight: 700; margin: 0; }
+
+/* TOPBAR */
+.topbar{ position: sticky; top: 0; z-index: 10; background: rgba(247,247,248,0.82); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.topbar-inner{ max-width: 1120px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+.brand{ font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--text); }
+.brand-slash{ color: var(--pink-dp); }
+.topnav{ display: flex; gap: 26px; }
+.topnav a{ font-size: 13.5px; font-weight: 600; color: var(--text-dim); transition: color 0.15s; }
+.topnav a:hover, .topnav a:focus-visible{ color: var(--pink-dp); }
+
+/* HERO */
+.hero{ position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 88px 24px 72px; display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 48px; align-items: end; }
+.hero-inner{ max-width: 620px; }
+h1{ font-size: clamp(32px, 4.6vw, 50px); line-height: 1.25; }
+.hl{ color: var(--pink-dp); white-space: nowrap; }
+.hero-sub{ margin-top: 22px; font-size: 16.5px; color: var(--text-dim); max-width: 520px; }
+.hero-cta{ display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+.btn{ font-size: 14px; font-weight: 700; padding: 13px 24px; border-radius: 999px; border: 1.5px solid transparent; display: inline-block; transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s; }
+.btn:hover{ transform: translateY(-2px); }
+.btn-primary{ background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dp) 100%); color: #fff; box-shadow: 0 6px 18px rgba(232,96,60,0.24); }
+.btn-primary:hover{ box-shadow: 0 10px 22px rgba(232,96,60,0.32); }
+.btn-ghost{ border-color: var(--lav); color: var(--lav-dp); background: #fff; }
+.btn-ghost:hover{ border-color: var(--pink-dp); color: var(--pink-dp); }
+
+.hero-panel{ background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 24px; box-shadow: 0 12px 32px rgba(60,60,66,0.08); font-size: 13.5px; }
+.hero-panel-title{ font-family: var(--font-accent); font-size: 13px; color: var(--lav-dp); margin-bottom: 12px; }
+.panel-row{ display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.panel-row:last-child{ border-bottom: none; }
+.panel-key{ color: var(--text-dim); font-weight: 600; }
+.panel-val{ color: var(--text); font-weight: 700; }
+.panel-val.ok{ color: var(--pink-dp); }
+.panel-link{ cursor: pointer; }
+.panel-link .panel-key{ font-family: var(--font-accent); color: var(--lav-dp); background: var(--card-lv); border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.panel-link .panel-val{ text-align: right; }
+.panel-link:hover .panel-val{ color: var(--pink-dp); }
+
+/* SECTIONS */
+.section{ position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 76px 24px; }
+.section h2{ font-size: clamp(24px, 3vw, 32px); margin-bottom: 8px; }
+.vs{ color: var(--pink-dp); font-style: normal; }
+.section-lead{ color: var(--text-dim); max-width: 660px; font-size: 15.5px; margin: 14px 0 40px; }
+.section-lead em{ color: var(--text); font-style: normal; font-weight: 600; }
+
+/* COMPARE TABLE — 한눈에 보는 2분할 비교 */
+.compare-wrap{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(60,60,66,0.06);
+}
+.compare-row{
+  display: grid;
+  grid-template-columns: 130px 1fr 1fr;
+  border-bottom: 1px solid var(--line);
+}
+.compare-row:last-child{ border-bottom: none; }
+.compare-head{ background: var(--card-lv); }
+.compare-cell{
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+}
+.compare-label{ font-weight: 700; color: var(--text-dim); font-size: 13.5px; }
+.compare-col-title{ font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text); }
+.compare-eg{ display: block; font-size: 11.5px; color: var(--text-dim); font-weight: 400; margin-top: 2px; }
+.compare-highlight{ background: rgba(232,96,60,0.05); }
+.compare-cell.locked::before, .compare-cell.partial::before, .compare-cell.open::before{
+  content: ''; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; border: 1.5px solid var(--line);
+}
+.compare-cell.locked::before{ background: #d9ebf8; border-color: #b9dbf2; }
+.compare-cell.partial::before{ background: linear-gradient(90deg, var(--pink) 50%, #d9ebf8 50%); border-color: var(--pink); }
+.compare-cell.open::before{ background: var(--mint); border-color: var(--mint); }
+.compare-foot .compare-cell{ font-size: 13px; color: var(--text-dim); align-items: flex-start; }
+.compare-foot .compare-label{ color: var(--lav-dp); }
+
+.callout{ margin-top: 26px; background: linear-gradient(135deg, var(--card-pk), var(--card-lv)); color: var(--text); border-radius: 22px; padding: 26px 28px; font-size: 15px; line-height: 1.8; }
+.callout-tag{ display: inline-block; font-family: var(--font-accent); font-size: 12.5px; color: var(--pink-dp); margin-bottom: 10px; }
+.callout strong{ color: var(--lav-dp); }
+
+/* SPEC GRID */
+.spec-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.spec-card{ background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s; box-shadow: 0 8px 22px rgba(60,60,66,0.06); }
+.spec-card:hover{ transform: translateY(-3px); border-color: var(--lav); box-shadow: 0 14px 28px rgba(60,60,66,0.10); }
+.spec-num{ display: inline-block; font-family: var(--font-accent); font-size: 12px; color: var(--pink-dp); background: var(--card-pk); border-radius: 999px; padding: 4px 12px; }
+.spec-card h3{ font-size: 18px; margin: 14px 0 8px; }
+.spec-card p{ color: var(--text-dim); font-size: 14px; margin: 0; }
+
+/* ACCORDION GUIDES */
+.accordion-list{ display: flex; flex-direction: column; gap: 12px; }
+.accordion-item{ background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; transition: border-color 0.15s, box-shadow 0.15s; }
+.accordion-item:hover{ border-color: var(--pink); }
+.accordion-item.open{ border-color: var(--lav); box-shadow: 0 10px 26px rgba(60,60,66,0.10); }
+.accordion-header{
+  width: 100%; background: none; border: none; cursor: pointer; text-align: left;
+  display: flex; align-items: center; gap: 18px; padding: 18px 20px;
+  font-family: var(--font-body); color: var(--text); font-size: 15.5px;
+}
+.accordion-index{
+  font-family: var(--font-accent); font-size: 14px; color: var(--lav-dp);
+  background: var(--card-lv); border-radius: 50%; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.accordion-title{ font-weight: 700; flex: 1; }
+.accordion-icon{ font-size: 20px; color: var(--lav-dp); transition: transform 0.2s; flex-shrink: 0; }
+.accordion-item.open .accordion-icon{ transform: rotate(45deg); }
+.accordion-panel{ max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
+.accordion-panel-inner{ padding: 0 20px 20px 70px; font-size: 14px; color: var(--text-dim); line-height: 1.8; }
+
+/* FOOTER */
+.site-footer{ position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 36px 24px 60px; border-top: 1px solid var(--line); font-size: 13px; color: var(--text-dim); }
+.site-footer p{ margin: 4px 0; }
+.footer-sub a{ color: var(--pink-dp); font-weight: 600; }
+
+/* RESPONSIVE */
+@media (max-width: 860px){
+  .hero{ grid-template-columns: 1fr; }
+  .spec-grid{ grid-template-columns: 1fr 1fr; }
+  .topnav{ display: none; }
+}
+@media (max-width: 640px){
+  .spec-grid{ grid-template-columns: 1fr; }
+  .compare-row{ grid-template-columns: 1fr 1fr; }
+  .compare-label{ display: none; }
+  .compare-cell{ flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px; }
+  .compare-cell::before{ position: absolute; }
+  .compare-head .compare-label{ display: none; }
+  .accordion-panel-inner{ padding: 0 18px 18px 18px; }
+}
+
+a:focus-visible, .btn:focus-visible, .accordion-header:focus-visible{ outline: 2px solid var(--pink-dp); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<div class="blob blob-a"></div>
+<div class="blob blob-b"></div>
+<div class="blob blob-c"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand">RISU<span class="brand-slash">/</span>RisuAI </span>
+    <nav class="topnav">
+      <a href="#diff">플랫폼 vs 프론트엔드</a>
+      <a href="#risuai">RisuAI가 뭐예요?</a>
+      <a href="#guides">가이드</a>
+      <a href="https://github.com/kwaroran/RisuAI" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">✨ AI채팅 리수(RisuAI) 달글 ✨</p>
+      <h1>RisuAI, 직접 짜서 쓰는<br><span class="hl">AI 채팅 프론트엔드</span></h1>
+      <p class="hero-sub">처음 보면 좀 막막할 수 있어요. RisuAI는 처음부터 다 만들어져 있는 서비스가 아니라, 프롬프트도 메모리도 스크립트도 전부 내가 직접 채워나가야 하는 도구거든요. 대신 한 번 익혀두면 내 손에 완전히 맞는 캐릭터 대화를 만들 수 있어요. 이 문서는 그 과정을 어렵지 않게 따라올 수 있도록, 판을 짤 때 참고할 수 있게 정리해둔 기록이에요.</p>
+    </div>
+    <div class="hero-panel">
+      <p class="hero-panel-title">한눈에 보기</p>
+      <a class="panel-row panel-link" href="#diff"><span class="panel-key">1</span><span class="panel-val">플랫폼 vs 프론트엔드 차이점</span></a>
+      <a class="panel-row panel-link" href="#risuai"><span class="panel-key">2</span><span class="panel-val">리수(RisuAI)란?</span></a>
+      <a class="panel-row panel-link" href="#guides"><span class="panel-key">3</span><span class="panel-val">리수 기능 설명</span></a>
+    </div>
+  </section>
+
+  <!-- DIFF SECTION -->
+  <section id="diff" class="section">
+    <p class="eyebrow">01 · 핵심 차이</p>
+    <h2>플랫폼 <span class="vs">vs</span> 프론트엔드</h2>
+    <p class="section-lead">둘 다 "AI와 캐릭터가 채팅한다"는 결과는 똑같아요. 여기서 말하는 <em>플랫폼</em>은 국내 플랫폼인 제타, 크랙처럼 앱만 켜면 바로 캐릭터와 대화할 수 있는 서비스형 사이트를 뜻하고, <em>프론트엔드</em>는 RisuAI처럼 모델과 설정을 직접 연결해서 쓰는 도구를 말해요. 결국 스위치판을 누가 쥐고 있느냐가 다른 거예요.</p>
+
+    <div class="compare-wrap">
+      <div class="compare-row compare-head">
+        <div class="compare-cell compare-label"></div>
+        <div class="compare-cell"><span class="compare-col-title">플랫폼<span class="compare-eg">제타 · 크랙</span></span></div>
+        <div class="compare-cell compare-highlight"><span class="compare-col-title">프론트엔드<span class="compare-eg">RisuAI</span></span></div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-label">모델 선택</div>
+        <div class="compare-cell locked">회사가 정해줘요</div>
+        <div class="compare-cell open compare-highlight">API로 직접 연결해요</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-label">프롬프트 구조</div>
+        <div class="compare-cell locked">비공개예요</div>
+        <div class="compare-cell open compare-highlight">전부 수정할 수 있어요</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-label">컨텍스트 크기</div>
+        <div class="compare-cell locked">고정돼 있어요</div>
+        <div class="compare-cell open compare-highlight">직접 조절해요</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-label">과금 방식</div>
+        <div class="compare-cell partial">정액 / 재화</div>
+        <div class="compare-cell open compare-highlight">사용한 토큰만큼만</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-label">데이터 위치</div>
+        <div class="compare-cell locked">회사 서버</div>
+        <div class="compare-cell open compare-highlight">로컬 · 자체호스팅</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell compare-label">진입장벽</div>
+        <div class="compare-cell open">앱만 켜면 끝이에요</div>
+        <div class="compare-cell locked compare-highlight">API 키부터 구해야 해요</div>
+      </div>
+      <div class="compare-row compare-foot">
+        <div class="compare-cell compare-label">한 줄 정리</div>
+        <div class="compare-cell">잠긴 스위치가 많은 대신, 아무것도 몰라도 괜찮아요.</div>
+        <div class="compare-cell compare-highlight">전부 열려있는 대신, 전부 직접 챙겨야 해요.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-tag">💭 이거 하나만 기억해주세요</span><br>
+      플랫폼은 <strong>서비스</strong>고, 프론트엔드는 <strong>도구</strong>예요. 플랫폼은 회사가 망하거나 정책이 바뀌면 데이터도 캐릭터도 같이 흔들려요. 프론트엔드는 오픈소스라서 로컬이든 셀프호스팅이든 통제권이 그대로 남아있어요. 대신 그만큼 세팅도 직접 챙겨야 하는 거예요.
+    </div>
+  </section>
+
+  <!-- RISUAI SECTION -->
+  <section id="risuai" class="section">
+    <p class="eyebrow">02 · RisuAI가 뭐예요?</p>
+    <h2>RisuAI, 하나씩 풀어볼게요</h2>
+    <p class="section-lead">국내 개발자가 만든 오픈소스 프론트엔드고, 지금도 계속 업데이트되고 있어요. 어떤 기능들이 있는지 목차만 먼저 보여드릴게요, 자세한 설명은 아래 03번 가이드에서 이어갈게요.</p>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <span class="spec-num">SETUP</span>
+        <h3>설치방법</h3>
+      </div>
+      <div class="spec-card">
+        <span class="spec-num">MODEL</span>
+        <h3>모델 선택 및 연결</h3>
+      </div>
+      <div class="spec-card">
+        <span class="spec-num">MEMORY</span>
+        <h3>하이파 메모리</h3>
+      </div>
+      <div class="spec-card">
+        <span class="spec-num">LOREBOOK</span>
+        <h3>로어북 & 작가의 노트</h3>
+      </div>
+      <div class="spec-card">
+        <span class="spec-num">SCRIPT</span>
+        <h3>Lua · JS · CSS/HTML</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDES SECTION -->
+  <section id="guides" class="section">
+    <p class="eyebrow">03 · 가이드 목차</p>
+    <h2>천천히 하나씩 볼까요</h2>
+    <p class="section-lead">순서대로 안 봐도 괜찮아요. 지금 막힌 부분을 눌러서 열어보세요 👀</p>
+
+    <div class="accordion-list">
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-index">01</span>
+          <span class="accordion-title">설치 & API 연결</span>
+          <span class="accordion-icon">＋</span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            RisuAI는 기본적으로 웹사이트로 사용해요. 크롬, 사파리, 삼성 인터넷 같은 브라우저에서 바로 접속할 수 있어요. 이 외에도 포켓리수, 노드리수가 있어요. 처음에는 웹사이트로 하는 걸 권장해요. API 키는 제미나이, 클로드 같은 곳에서 발급받아 설정 &gt; API 항목에 등록하면 돼요. 키를 여러 개 등록해두고 상황에 따라 전환하는 것도 가능해요. API 키 연결이랑 설치 방법은 초보자 가이드 글에 자세히 정리되어 있으니, 꼭 먼저 확인해주세요.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-index">02</span>
+          <span class="accordion-title">캐릭터 카드 & 로어북 설계</span>
+          <span class="accordion-icon">＋</span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            캐릭터 카드는 이름, 설명, 성격, 첫 메시지, 예시 대화 같은 필드로 구성돼요. 로어북은 세계관처럼 부피가 큰 설정을 카드 밖으로 빼두는 저장소예요. 특정 키워드가 등장할 때만 불러오고, depth와 우선순위로 언제 어떤 정보가 노출될지 조절해요. 카드는 캐릭터의 핵심만 담아 가볍게 유지하고, 설정은 로어북으로 확장하는 구조예요. 여기에 작가의 노트를 더하면, 매 턴마다 AI에게 짧은 지시(말투 유지, 특정 행동 유도 등)를 얹어줄 수 있어요. 로어북이 캐릭터에게 "정보"를 주는 거라면, 작가의 노트는 AI에게 "지시"를 주는 느낌이에요.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-index">03</span>
+          <span class="accordion-title">하이파 메모리</span>
+          <span class="accordion-icon">＋</span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            하이파 메모리는 리수에서 쓸 수 있는 부가 기능이에요. 별도로 가입만 하면 평생 무료로 쓸 수 있어요. 컨텍스트를 넘어가는 내용을 요약해서 저장해주기 때문에 장기 기억이 확 늘어나요.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-index">04</span>
+          <span class="accordion-title">CSS/HTML 커스터마이징</span>
+          <span class="accordion-icon">＋</span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            CSS/HTML로는 테마 색상, 채팅 버블 모양, 상태창 UI 같은 화면 요소를 원하는 대로 꾸밀 수 있어요. 다른 사람이 만든 프리셋을 가져와서 내 캐릭터에 맞게 수정하는 것도 가능하고, 코드가 낯설어도 기존 프리셋을 그대로 가져다 쓰는 정도는 어렵지 않아요.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-index">05</span>
+          <span class="accordion-title">Lua 스크립트 기초</span>
+          <span class="accordion-icon">＋</span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            Lua 스크립트는 카드나 로어북이 담당하는 '설정'이 아니라, 입출력을 실시간으로 가공하는 '코드' 영역이에요. editDisplay 함수는 화면에 보이는 텍스트를 실제 대화 기록과 다르게 표시해주고, onOutput 훅은 AI 응답이 나올 때마다 실행돼서 원하는 치환·포맷 로직을 넣을 수 있어요. 상태창이나 자동 마크다운 제거 같은 기능도 이 두 가지 조합으로 만들어져요. 다만 초보자에게는 난이도가 있는 영역이에요. 직접 만들기는 쉽지 않고, 안 쓴다고 캐릭터 대화 자체에 문제가 생기는 것도 아니니 굳이 무리해서 배우지 않으셔도 괜찮아요.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-index">06</span>
+          <span class="accordion-title">JS 플러그인 만들기</span>
+          <span class="accordion-icon">＋</span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            V3 플러그인 포맷은 IIFE(즉시실행함수)로 코드 전체를 감싸서 전역 스코프 오염을 막는 구조예요. 플러그인 안에서 UI를 추가하고 싶으면 플로팅 패널을 DOM에 직접 삽입하고, 체크박스나 버튼 같은 인터랙션 요소를 붙여서 클립보드 복사 같은 기능을 구현할 수 있어요. 이 역시 초보자에게는 난이도가 있는 기능이에요. 직접 만들기는 어렵고, 굳이 쓰지 않아도 되는 기능이니 필요할 때만 참고하셔도 돼요.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout">
+      <span class="callout-tag">✨ AI채팅 리수(RisuAI) 달글 ✨</span><br>
+      리수에서 쓰이는 자료와 정보, AI 채팅에 관한 이야기, 리시들이 직접 만든 캐릭터까지 다양한 즐길 거리가 모여있는 리시들의 달글이에요. 리수 달글은 언제나 열려있어요.
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>이 문서는 RisuAI 공식 문서가 아니라, 직접 정리한 비공식 가이드입니다.</p>
+</footer>
+
+<script>
+function toggleAccordion(btn){
+  var item = btn.closest('.accordion-item');
+  var panel = item.querySelector('.accordion-panel');
+  var isOpen = item.classList.contains('open');
+
+  document.querySelectorAll('.accordion-item.open').forEach(function(el){
+    el.classList.remove('open');
+    el.querySelector('.accordion-panel').style.maxHeight = null;
+  });
+
+  if(!isOpen){
+    item.classList.add('open');
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+  }
+}
+</script>
+
+</body>
+</html>
