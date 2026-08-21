@@ -119,35 +119,15 @@ body {
   margin-bottom: 16px;
 }
 
-/* Notion Table */
-.notion-table-wrap {
-  width: 100%;
-  overflow-x: auto;
-  margin: 16px 0;
+/* List */
+.notion-list {
+  padding-left: 24px;
+  margin: 12px 0;
 }
-.notion-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 15px;
-}
-.notion-table th, .notion-table td {
-  border: 1px solid var(--notion-border);
-  padding: 10px 14px;
-  text-align: left;
-}
-.notion-table th {
-  background: var(--notion-bg-gray);
-  font-weight: 500;
-  color: var(--notion-text-gray);
-}
-.notion-table td {
+.notion-list li {
+  margin-bottom: 10px;
+  padding: 2px 0;
   color: var(--notion-text);
-}
-
-.highlight-bg {
-  background: var(--notion-bg-yellow);
-  padding: 2px 4px;
-  border-radius: 3px;
 }
 </style>
 </head>
@@ -180,39 +160,26 @@ body {
   <p class="notion-text">RisuAI는 AI와 대화할 수 있는 <strong>'도구 화면(주방)'</strong>만 제공합니다. 대화를 만들어낼 실제 똑똑한 두뇌(AI 모델)는 내가 직접 외부에서 가져와서 연결해야 합니다.</p>
   <p class="notion-text">처음엔 요리법(API 세팅 등)을 배워야 해서 <strong>어렵고 귀찮지만</strong>, 내 입맛에 맞는 최고급 재료를 직접 가져와서 <strong>100% 내 마음대로</strong> 세팅할 수 있는 압도적인 자유도를 가집니다.</p>
 
-  <div class="notion-table-wrap">
-    <table class="notion-table">
-      <thead>
-        <tr>
-          <th>비교 항목</th>
-          <th>일반 채팅 플랫폼</th>
-          <th>프론트엔드 (RisuAI)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>AI 모델 선택</strong></td>
-          <td>앱에서 제공하는 모델만 사용 가능</td>
-          <td><span class="highlight-bg">원하는 AI(GPT, Claude 등)를 자유롭게 연결</span></td>
-        </tr>
-        <tr>
-          <td><strong>세세한 설정</strong></td>
-          <td>대부분 숨겨져 있거나 제한적임</td>
-          <td><span class="highlight-bg">프롬프트, 메모리 등 100% 직접 수정 가능</span></td>
-        </tr>
-        <tr>
-          <td><strong>비용</strong></td>
-          <td>월 정액제 또는 앱 내 재화 결제</td>
-          <td><span class="highlight-bg">API 결제, 혹은 구글 크레딧으로 무료 이용 가능</span></td>
-        </tr>
-        <tr>
-          <td><strong>진입 장벽</strong></td>
-          <td>앱 설치 후 즉시 사용 가능 (매우 쉬움)</td>
-          <td>API 발급 등 초기 세팅 필요 (어려움)</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <h3 class="notion-h3">✨ 프론트엔드의 압도적인 장점 4가지</h3>
+  
+  <ul class="notion-list" style="margin-top: 12px;">
+    <li style="margin-bottom: 20px;">
+      <strong>1. 내 맘대로 고르는 AI 모델 (무검열 가능)</strong><br>
+      <span style="color: var(--notion-text-gray); font-size: 15px;">GPT, Claude, Gemini 등 원하는 AI를 자유롭게 연결할 수 있습니다. 어떤 모델을 연결하느냐에 따라 대화의 지능이 달라지며, 특정 모델을 사용하면 플랫폼 특유의 강력한 검열 없이 자유로운 대화가 가능해집니다.</span>
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>2. 100% 투명한 세세한 설정 (프롬프트/메모리)</strong><br>
+      <span style="color: var(--notion-text-gray); font-size: 15px;">일반 앱에서는 숨겨져 있는 프롬프트(AI에게 내리는 기본 지시사항)나 메모리를 직접 수정할 수 있습니다. 이 덕분에 캐릭터가 내 말에 반응하는 방식이나 기억력을 내 취향에 맞게 극한으로 튜닝할 수 있습니다.</span>
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>3. 합리적인 비용 (무료 이용 가능)</strong><br>
+      <span style="color: var(--notion-text-gray); font-size: 15px;">월 정액제나 앱 내 재화 결제 없이, 내가 대화에 '사용한 토큰만큼만' API 제공 회사에 지불하면 됩니다. 특히 구글(Gemini) 등에서 제공하는 무료 크레딧을 활용하면 사실상 무료로 고성능 AI와 무제한에 가까운 채팅을 즐길 수 있습니다.</span>
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>4. 진입 장벽을 넘었을 때의 확실한 보상</strong><br>
+      <span style="color: var(--notion-text-gray); font-size: 15px;">API 발급 등 초기 세팅이 필요해 처음엔 다소 어렵게 느껴질 수 있습니다. 하지만 한 번 세팅을 끝내면, 앱 서비스 종료를 걱정할 필요 없이 평생 영구적으로 내 캐릭터 데이터를 소유할 수 있습니다.</span>
+    </li>
+  </ul>
 
   <h2 class="notion-h2">2. 상세 가이드 (핵심 요소)</h2>
   <p class="notion-text" style="color: var(--notion-text-gray);">세부적인 설명이 필요한 항목을 펼쳐서 확인하세요.</p>
@@ -252,11 +219,12 @@ body {
   <details class="notion-toggle">
     <summary class="notion-toggle-summary">
       <span class="notion-toggle-icon">▶</span>
-      <span>CSS / 스크립트 커스터마이징 (심화)</span>
+      <span>모듈 & 플러그인 (심화)</span>
     </summary>
     <div class="notion-toggle-content">
       <p class="notion-text"><strong>전혀 몰라도 채팅하는 데 아무 지장이 없습니다.</strong></p>
-      <p class="notion-text">CSS는 화면의 테마 색상이나 채팅창 모양 등 내 마음대로 예쁘게 꾸미기 위한 기능이며, Lua/JS 스크립트는 한 단계 더 나아간 심화 기능입니다. 초보자일 때는 코드가 뭔지 아무것도 모르는 게 당연합니다. 이런 코드를 전혀 모른다고 해서 캐릭터와 채팅을 못 하거나 대화 퀄리티가 떨어지는 것은 절대 아니니 안심하셔도 됩니다!</p>
+      <p class="notion-text"><strong>모듈과 플러그인</strong>은 채팅창에 편리한 번역 버튼을 달거나, 상태창을 띄우고 특수 효과를 넣는 등 다른 금손 유저들이 만들어둔 <strong>'확장팩(모드)'</strong>을 내 RisuAI에 설치하는 기능입니다.</p>
+      <p class="notion-text">초보자일 때는 이런 코드가 뭔지 모르는 게 당연합니다. 플러그인을 전혀 쓰지 않아도 캐릭터와 대화하는 데는 아무 문제가 없으며, 대화 퀄리티가 떨어지는 것도 절대 아니니 안심하세요! 나중에 리수에 익숙해진 뒤에 달글에서 공유되는 유용한 플러그인들을 하나씩 설치해보는 것을 추천합니다.</p>
     </div>
   </details>
 
@@ -265,20 +233,20 @@ body {
   <details class="notion-toggle">
     <summary class="notion-toggle-summary">
       <span class="notion-toggle-icon">▶</span>
-      <span>캐릭터 카드는 어디서 구하나요?</span>
+      <span>캐릭터 다운은 어디서 받나요?</span>
     </summary>
     <div class="notion-toggle-content">
-      <p class="notion-text">캐릭터 카드는 <strong>부속 달글의 '캐릭터 도감'</strong>에서 구하시거나, <strong>재니터(Janitor), 렐름(Realm)</strong> 같은 외부 사이트에서 다운받으실 수 있습니다. 다운받은 이미지(PNG)를 RisuAI 화면에 그대로 드래그 앤 드롭하면 캐릭터가 바로 추가됩니다.</p>
+      <p class="notion-text">캐릭터 카드는 <strong>부속 달글의 '캐릭터 도감'</strong>에서 구하시거나, <strong>재니터(Janitor), 렐름(Realm)</strong> 같은 외부 사이트에서 다운받을 수 있습니다. 리수에서는 복잡한 과정 없이 캐릭터 이미지만으로도 임포트해서 쉽게 캐릭터를 다운받는 게 가능합니다.</p>
     </div>
   </details>
 
   <details class="notion-toggle">
     <summary class="notion-toggle-summary">
       <span class="notion-toggle-icon">▶</span>
-      <span>프롬프트(프리셋)는 꼭 그대로 써야 하나요?</span>
+      <span>프리셋 프롬프트는 꼭 그대로 써야 하나요?</span>
     </summary>
     <div class="notion-toggle-content">
-      <p class="notion-text">처음에는 다른 사람들이 잘 깎아둔 프롬프트를 복사해서 그대로 쓰는 것을 추천합니다. 하지만 익숙해진다면, 프롬프트 역시 얼마든지 개인의 스타일로 마음껏 수정하고 달글 자료를 통해 다양하게 활용하셔도 괜찮습니다.</p>
+      <p class="notion-text">처음에는 <strong>달글발 프리셋 자료</strong>를 그대로 쓰는 것을 추천합니다. 하지만 익숙해진다면, 프리셋 프롬프트 역시 얼마든지 개인의 스타일로 마음껏 수정하고 활용하셔도 괜찮습니다.</p>
     </div>
   </details>
 
@@ -288,8 +256,10 @@ body {
       <span>토큰(Token)이 도대체 뭔가요?</span>
     </summary>
     <div class="notion-toggle-content">
-      <p class="notion-text">간단하게 말해 AI가 인식하는 <strong>'단어 수의 단위'</strong>이자 <strong>'기억력의 한계치'</strong>라고 생각하시면 됩니다.</p>
-      <p class="notion-text">예를 들어 AI의 가방(컨텍스트) 크기가 1,000토큰이라면, 대화가 길어져서 가방이 꽉 차는 순간 옛날 대화부터 밖으로 흘려버립니다(과거를 까먹음). 이 가방 크기를 효율적으로 쓰기 위해, 평소엔 숨겨뒀다 필요할 때만 꺼내보는 <strong>'로어북'</strong>을 쓰고, 꽉 찬 가방의 과거 기억을 압축해주는 <strong>'하이파 메모리'</strong>를 활용하는 것입니다.</p>
+      <p class="notion-text">간단하게 말해 AI가 인식하는 <strong>'단어 수의 단위'</strong>이자 <strong>'기억력의 한계치'</strong>라고 생각하시면 됩니다. 이 토큰과 관련된 심화 개념으로 '컨텍스트'와 '최대 응답 크기'가 있습니다.</p>
+      <p class="notion-text"><strong>'컨텍스트(Context)'</strong>는 AI가 과거의 대화와 캐릭터 설정 등을 기억할 수 있는 총 뇌 용량(가방 크기)을 말합니다. 대화가 길어져서 이 가방이 꽉 차면 옛날 대화부터 밖으로 흘려버려 까먹게 됩니다.<br>
+      <strong>'최대 응답 크기(Max Output)'</strong>는 AI가 내 말에 한 번에 대답할 수 있는 말의 최대 길이를 뜻합니다.</p>
+      <p class="notion-text">이 한정된 가방 크기를 효율적으로 쓰기 위해 평소엔 숨겨뒀다 필요할 때만 꺼내보는 <strong>'로어북'</strong>을 쓰고, 과거 기억을 압축해주는 <strong>'하이파 메모리'</strong>를 활용하는 것입니다.</p>
     </div>
   </details>
 
@@ -299,7 +269,7 @@ body {
       <span>리수 테마나 배경화면은 어떻게 바꾸나요?</span>
     </summary>
     <div class="notion-toggle-content">
-      <p class="notion-text">RisuAI의 배경 이미지나 테마 등도 취향껏 꾸밀 수 있습니다. 직접 코드를 만질 필요 없이, <strong>달글 자료실</strong>을 이용하시면 다른 금손 유저들이 공유해둔 예쁜 테마 자료들이 많으니 적극적으로 활용해 보세요.</p>
+      <p class="notion-text">RisuAI의 배경 이미지나 테마 등도 취향껏 꾸밀 수 있습니다. 직접 코드를 만질 필요 없이, <strong>달글 자료실</strong>을 이용하시면 다른 유저들이 공유해둔 예쁜 테마 자료들이 많으니 적극적으로 활용해 보세요.</p>
     </div>
   </details>
 
